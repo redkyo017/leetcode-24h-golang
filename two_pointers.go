@@ -28,3 +28,16 @@ func IsPalindrome(s string) bool {
 	}
 	return true
 }
+
+// 121. Best Time to Buy and Sell Stock
+func MaxProfit(prices []int) int {
+	l := 0
+	res := 0
+	for r := range prices {
+		if prices[r] < prices[l] {
+			l = r
+		}
+		res = max(res, prices[r]-prices[l])
+	}
+	return res
+}
