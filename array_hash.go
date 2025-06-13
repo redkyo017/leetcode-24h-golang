@@ -80,3 +80,30 @@ func IsValidSudoku(board [][]byte) bool {
 	}
 	return true
 }
+
+// 238. Product of Array Except Self
+
+func ProductExceptSelf(nums []int) []int {
+	// PREFIX SUM
+	if len(nums) == 0 {
+		return []int{}
+	}
+	res := make([]int, len(nums))
+	current := 1
+	for i := 0; i < len(nums); i++ {
+		res[i] = current
+		current *= nums[i]
+	}
+	current = 1
+	for j := len(nums) - 1; j >= 0; j-- {
+		res[j] = res[j] * current
+		current *= nums[j]
+	}
+
+	return res
+}
+
+// 347. Top K Frequent Elements
+func TopKFrequent(nums []int, k int) []int {
+
+}
