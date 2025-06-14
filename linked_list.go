@@ -99,3 +99,28 @@ func AddTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 	}
 	return dummy.Next
 }
+
+// 138. Copy List with Random Pointer
+type Node struct {
+	Val    int
+	Next   *Node
+	Random *Node
+}
+
+func copyRandomList(head *Node) *Node {
+	clones := make(map[*Node]*Node)
+	current := head
+	for current != nil {
+		clone := &Node{current.Val, nil, nil}
+		clones[current] = clone
+		current = current.Next
+	}
+	current = head
+	for current != nil {
+		c := clones[current]
+		c.Next = clones[current.Next]
+		c.Random = clones[current.Random]
+		current = current.Next
+	}
+	return clones[head]
+}
