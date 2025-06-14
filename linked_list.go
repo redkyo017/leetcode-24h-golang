@@ -107,7 +107,7 @@ type Node struct {
 	Random *Node
 }
 
-func copyRandomList(head *Node) *Node {
+func CopyRandomList(head *Node) *Node {
 	clones := make(map[*Node]*Node)
 	current := head
 	for current != nil {
