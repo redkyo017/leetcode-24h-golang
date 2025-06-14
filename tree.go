@@ -1,6 +1,8 @@
 package main
 
-import "math"
+import (
+	"math"
+)
 
 type TreeNode struct {
 	Val   int
@@ -104,4 +106,15 @@ func IsBalanced(root *TreeNode) bool {
 	}
 	findDepth(root)
 	return res
+}
+
+// 100. Same Tree
+func IsSameTree(p *TreeNode, q *TreeNode) bool {
+	if p == nil && q == nil {
+		return true
+	}
+	if p == nil || q == nil || p.Val != q.Val {
+		return false
+	}
+	return IsSameTree(p.Left, q.Left) && IsSameTree(p.Right, q.Right)
 }

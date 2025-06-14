@@ -42,3 +42,60 @@ func MergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
 	}
 	return dummy.Next
 }
+
+// 141. Linked List Cycle
+func HasCycle(head *ListNode) bool {
+	// if head == nil {
+	// 	return false
+	// }
+	// fast := head
+	// slow := head
+	// for fast != nil && fast.Next != nil && slow != nil {
+	// 	fast = fast.Next.Next
+	// 	slow = slow.Next
+	// 	if fast == slow {
+	// 		return true
+	// 	}
+	// }
+	// return false
+
+	visited := make(map[*ListNode]bool)
+	node := head
+	for node != nil {
+		if _, exists := visited[node]; exists {
+			return true
+		}
+		visited[node] = true
+		node = node.Next
+	}
+	return false
+}
+
+// 2. Add Two Numbers
+func AddTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
+	dummy := &ListNode{}
+	current := dummy
+	carry := 0
+	for l1 != nil || l2 != nil {
+		d1, d2 := 0, 0
+		if l1 != nil {
+			d1 = l1.Val
+			l1 = l1.Next
+		}
+		if l2 != nil {
+			d2 = l2.Val
+			l2 = l2.Next
+		}
+		digit := d1 + d2 + carry
+		remainder := digit % 10
+		carry = digit / 10
+
+		current.Next = &ListNode{remainder, nil}
+		current = current.Next
+
+	}
+	if carry != 0 {
+		current.Next = &ListNode{Val: carry}
+	}
+	return dummy.Next
+}
