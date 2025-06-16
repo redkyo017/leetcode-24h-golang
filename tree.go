@@ -118,3 +118,34 @@ func IsSameTree(p *TreeNode, q *TreeNode) bool {
 	}
 	return IsSameTree(p.Left, q.Left) && IsSameTree(p.Right, q.Right)
 }
+
+// 98. Validate Binary Search Tree
+func IsValidBST(root *TreeNode) bool {
+	// RECURSION DIVIDE AND CONQUER
+	// var findIfInvalidBST func(root *TreeNode, left *TreeNode, right *TreeNode) bool
+	// findIfInvalidBST = func(root *TreeNode, min *TreeNode, max *TreeNode) bool {
+	// 	if root == nil {
+	// 		return true
+	// 	}
+	// 	if min != nil && min.Val > root.Val {
+	// 		return false
+	// 	}
+	// 	if min != nil && min.Val < root.Val {
+	// 		return false
+	// 	}
+	// 	return findIfInvalidBST(root.Left, min, root) && findIfInvalidBST(root.Right, root, max)
+	// }
+	// return findIfInvalidBST(root, nil, nil)
+	// ITERATIVE - DEPTH FIRST SEARCH
+	var dfs func(root *TreeNode, left int, right int) bool
+	dfs = func(root *TreeNode, left int, right int) bool {
+		if root == nil {
+			return true
+		}
+		if root.Val > left && root.Val < right {
+			return dfs(root.Left, left, root.Val) && dfs(root.Right, root.Val, right)
+		}
+		return false
+	}
+	return dfs(root, math.MinInt, math.MaxInt)
+}

@@ -103,6 +103,18 @@ func ProductExceptSelf(nums []int) []int {
 	return res
 }
 
+// 287. Find the Duplicate Number
+func FindDuplicate(nums []int) int {
+	m := make(map[int]bool)
+	for _, num := range nums {
+		if _, ok := m[num]; ok {
+			return num
+		}
+		m[num] = true
+	}
+	return -1
+}
+
 // // 347. Top K Frequent Elements
 // func TopKFrequent(nums []int, k int) []int {
 

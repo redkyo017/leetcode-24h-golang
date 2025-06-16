@@ -17,3 +17,8 @@ func LengthOfLongestSubstring(s string) int {
 	}
 	return res
 }
+
+// 567. Permutation in String
+func CheckInclusion(s1 string, s2 string) bool {
+
+}

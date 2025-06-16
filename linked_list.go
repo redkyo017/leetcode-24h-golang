@@ -107,6 +107,7 @@ type Node struct {
 	Random *Node
 }
 
+// 138. Copy List with Random Pointer
 func CopyRandomList(head *Node) *Node {
 	clones := make(map[*Node]*Node)
 	current := head
@@ -123,4 +124,22 @@ func CopyRandomList(head *Node) *Node {
 		current = current.Next
 	}
 	return clones[head]
+}
+
+// 19. Remove Nth Node From End of List
+func RemoveNthFromEnd(head *ListNode, n int) *ListNode {
+	dummy := &ListNode{0, head}
+	// Two passed
+	right := dummy
+	for i := 0; i < n; i++ {
+		right = right.Next
+	}
+	left := dummy
+	for right != nil && right.Next != nil {
+		left = left.Next
+		right = right.Next
+	}
+	left.Next = left.Next.Next
+
+	return dummy.Next
 }
