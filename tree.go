@@ -149,3 +149,26 @@ func IsValidBST(root *TreeNode) bool {
 	}
 	return dfs(root, math.MinInt, math.MaxInt)
 }
+
+// 572. Subtree of Another Tree
+func IsSubtree(root *TreeNode, subRoot *TreeNode) bool {
+	if root == nil {
+		return false
+	}
+
+	var sameTree func(t1 *TreeNode, t2 *TreeNode) bool
+	sameTree = func(t1 *TreeNode, t2 *TreeNode) bool {
+		if t1 == nil && t2 == nil {
+			return true
+		}
+		if t1 == nil || t2 == nil || (t1.Val != t2.Val) {
+			return false
+		}
+		return sameTree(t1.Left, t2.Left) && sameTree(t1.Right, t2.Right)
+	}
+
+	if sameTree(root, subRoot) {
+		return true
+	}
+	return IsSubtree(root.Left, subRoot) || IsSubtree(root.Right, subRoot)
+}

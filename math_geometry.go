@@ -27,3 +27,8 @@ func isHappy(n int) bool {
 
 	return true
 }
+
+// 50. Pow(x, n)
+func MyPow(x float64, n int) float64 {
+
+}
