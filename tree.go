@@ -172,3 +172,19 @@ func IsSubtree(root *TreeNode, subRoot *TreeNode) bool {
 	}
 	return IsSubtree(root.Left, subRoot) || IsSubtree(root.Right, subRoot)
 }
+
+// 235. Lowest Common Ancestor of a Binary Search Tree
+func LowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
+	if root == p || root == q {
+		return root
+	}
+
+	if p.Val > root.Val && q.Val > root.Val {
+		return LowestCommonAncestor(root.Right, p, q)
+	}
+	if p.Val < root.Val && q.Val < root.Val {
+		return LowestCommonAncestor(root.Left, p, q)
+	}
+
+	return root
+}
