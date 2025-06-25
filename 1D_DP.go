@@ -19,3 +19,15 @@ func minCostClimbingStairs(cost []int) int {
 	}
 	return min(cost[0], cost[1])
 }
+
+// 198. House Robber
+func rob(nums []int) int {
+	if len(nums) == 1 {
+		return nums[0]
+	}
+	n1, n2 := 0, nums[0]
+	for i := 1; i < len(nums); i++ {
+		n1, n2 = n2, max(n1+nums[i], n2)
+	}
+	return n2
+}
