@@ -52,3 +52,32 @@ func RobII(nums []int) int {
 	amount2 := robber(nums[1:])
 	return max(amount1, amount2)
 }
+
+// 5. Longest Palindromic Substring
+func LongestPalindrome(s string) string {
+	maxChar := 0
+	res := ""
+	for i, _ := range s {
+		// odd length
+		l, r := i, i
+		for l >= 0 && r < len(s) && s[l] == s[r] {
+			if r-l+1 > maxChar {
+				maxChar = r - l + 1
+				res = s[l : r+1]
+			}
+			l, r = l-1, r+1
+		}
+
+		// even length
+		l, r = i, i+1
+		for l >= 0 && r < len(s) && s[l] == s[r] {
+			if r-l+1 > maxChar {
+				maxChar = r - l + 1
+				res = s[l : r+1]
+			}
+			l, r = l-1, r+1
+		}
+	}
+
+	return res
+}
