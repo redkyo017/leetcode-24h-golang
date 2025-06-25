@@ -10,7 +10,7 @@ func ClimbStairs(n int) int {
 }
 
 // 746. Min Cost Climbing Stairs
-func minCostClimbingStairs(cost []int) int {
+func MinCostClimbingStairs(cost []int) int {
 	if len(cost) == 0 {
 		return 0
 	}
@@ -21,7 +21,7 @@ func minCostClimbingStairs(cost []int) int {
 }
 
 // 198. House Robber
-func rob(nums []int) int {
+func Rob(nums []int) int {
 	if len(nums) == 1 {
 		return nums[0]
 	}
@@ -30,4 +30,25 @@ func rob(nums []int) int {
 		n1, n2 = n2, max(n1+nums[i], n2)
 	}
 	return n2
+}
+
+// 213. House Robber II
+func RobII(nums []int) int {
+	if len(nums) == 0 {
+		return 0
+	}
+	if len(nums) == 1 {
+		return nums[0]
+	}
+	var robber func(amounts []int) int
+	robber = func(amounts []int) int {
+		n1, n2 := 0, amounts[0]
+		for i := 1; i < len(amounts); i++ {
+			n1, n2 = n2, max(n1+amounts[i], n2)
+		}
+		return n2
+	}
+	amount1 := robber(nums[:len(nums)-1])
+	amount2 := robber(nums[1:])
+	return max(amount1, amount2)
 }
