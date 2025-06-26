@@ -81,3 +81,25 @@ func LongestPalindrome(s string) string {
 
 	return res
 }
+
+// 647. Palindromic Substrings
+func CountSubstrings(s string) int {
+	res := 0
+	for i, _ := range s {
+		// odd length
+		l, r := i, i
+		for l >= 0 && r < len(s) && s[l] == s[r] {
+			res += 1
+			l, r = l-1, r+1
+		}
+
+		// even length
+		l, r = i, i+1
+		for l >= 0 && r < len(s) && s[l] == s[r] {
+			res += 1
+			l, r = l-1, r+1
+		}
+	}
+
+	return res
+}
