@@ -188,3 +188,58 @@ func LowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
 
 	return root
 }
+
+// 1448. Count Good Nodes in Binary Tree
+func GoodNodes(root *TreeNode) int {
+	res := 0
+
+	return res
+}
+
+// 102. Binary Tree Level Order Traversal
+func LevelOrder(root *TreeNode) [][]int {
+	res := [][]int{}
+	if root == nil {
+		return res
+	}
+	queue := []*TreeNode{root}
+
+	for len(queue) > 0 {
+		n := len(queue)
+		level := []int{}
+		for i := 0; i < n; i++ {
+			node := queue[0]
+			queue = queue[1:]
+			level = append(level, node.Val)
+			if node.Left != nil {
+				queue = append(queue, node.Left)
+			}
+			if node.Right != nil {
+				queue = append(queue, node.Right)
+			}
+		}
+		res = append(res, level)
+	}
+	return res
+}
+
+// 199. Binary Tree Right Side View
+func RightSideView(root *TreeNode) []int {
+	if root == nil {
+		return []int{}
+	}
+	res := []int{}
+	queue := []*TreeNode{root}
+	for len(queue) > 0 {
+		n := len(queue)
+		for i := 0; i < n; i++ {
+			node := queue[0]
+			queue = queue[1:]
+			res = append(res, node.Val)
+			if node.Right != nil {
+				queue = append(queue, node.Right)
+			}
+		}
+	}
+	return res
+}
