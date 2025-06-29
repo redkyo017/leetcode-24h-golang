@@ -59,3 +59,25 @@ func CheckInclusion(s1 string, s2 string) bool {
 	}
 	return matches == 26
 }
+
+// 424. Longest Repeating Character Replacement
+func CharacterReplacement(s string, k int) int {
+	l := 0
+	countChar := make(map[byte]int)
+	maxFrequentChar := 0
+	res := 0
+	for r := range s {
+		countChar[s[r]]++
+		if countChar[s[r]] > maxFrequentChar {
+			maxFrequentChar = countChar[s[r]]
+		}
+
+		if (r-l+1)-maxFrequentChar > k {
+			countChar[s[l]]--
+			l++
+		}
+
+		res = max(res, r-l+1)
+	}
+	return res
+}
