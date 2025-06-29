@@ -141,7 +141,7 @@ func GroupAnagrams(strs []string) [][]string {
 	res := [][]string{}
 	group := make(map[string][]string, len(strs))
 	for _, str := range strs {
-		countChar := make([]int, 26)
+		countChar := [26]int{}
 		for i := 'a' - 'a'; i <= 'z'-'z'; i++ {
 			countChar[i] = 0
 		}
