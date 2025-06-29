@@ -136,6 +136,37 @@ func LongestConsecutive(nums []int) int {
 	return res
 }
 
+// 49. Group Anagrams
+func GroupAnagrams(strs []string) [][]string {
+	res := [][]string{}
+	group := make(map[string][]string, len(strs))
+	for _, str := range strs {
+		countChar := make([]int, 26)
+		for i := 'a' - 'a'; i <= 'z'-'z'; i++ {
+			countChar[i] = 0
+		}
+		for _, c := range str {
+			countChar[c-'a']++
+		}
+		key := ""
+		for char, count := range countChar {
+			if count != 0 {
+				key += string(char) + string(count)
+			}
+		}
+		if _, ok := group[key]; ok {
+			group[key] = append(group[key], str)
+
+		} else {
+			group[key] = []string{str}
+		}
+	}
+	for _, set := range group {
+		res = append(res, set)
+	}
+	return res
+}
+
 // // 347. Top K Frequent Elements
 // func TopKFrequent(nums []int, k int) []int {
 
