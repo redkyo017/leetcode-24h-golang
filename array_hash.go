@@ -115,6 +115,27 @@ func FindDuplicate(nums []int) int {
 	return -1
 }
 
+// 128. Longest Consecutive Sequence
+func LongestConsecutive(nums []int) int {
+	numSet := make(map[int]bool, 0)
+	for _, num := range nums {
+		numSet[num] = true
+	}
+	res := 0
+	for num := range numSet {
+		if !numSet[num-1] {
+			count := 1
+			currentNum := num
+			for numSet[currentNum+1] {
+				currentNum++
+				count++
+			}
+			res = max(res, count)
+		}
+	}
+	return res
+}
+
 // // 347. Top K Frequent Elements
 // func TopKFrequent(nums []int, k int) []int {
 
