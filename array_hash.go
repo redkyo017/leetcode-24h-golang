@@ -168,6 +168,25 @@ func GroupAnagrams(strs []string) [][]string {
 }
 
 // // 347. Top K Frequent Elements
-// func TopKFrequent(nums []int, k int) []int {
+func TopKFrequent(nums []int, k int) []int {
+	count := make(map[int]int)
+	for _, num := range nums {
+		count[num]++
+	}
 
-// }
+	frequency := make([][]int, len(nums)+1)
+	for num, freq := range count {
+		frequency[freq] = append(frequency[freq], num)
+	}
+	res := []int{}
+	for i := len(frequency) - 1; i >= 0 && len(res) < k; i-- {
+		for _, num := range frequency[i] {
+			res = append(res, num)
+			if len(res) == k {
+				return res
+			}
+		}
+	}
+
+	return res
+}
