@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"slices"
+	"strconv"
 )
 
 // 217. Contains Duplicate
@@ -189,4 +190,30 @@ func TopKFrequent(nums []int, k int) []int {
 	}
 
 	return res
+}
+
+// 271. Encode and Decode Strings
+type Solution struct{}
+
+func (s *Solution) Encode(strs []string) string {
+	encoded := ""
+	for _, str := range strs {
+		encoded += fmt.Sprintf("%d#%s", len(str), str)
+	}
+	return encoded
+}
+
+func (s *Solution) Decoded(encoded string) []string {
+	decoded := []string{}
+	i := 0
+	for i < len(encoded) {
+		j := i
+		for encoded[j] != '#' {
+			j++
+		}
+		length, _ := strconv.Atoi(encoded[i:j])
+		decoded = append(decoded, encoded[j+1:j+1+length])
+		i = j + 1 + length
+	}
+	return decoded
 }
