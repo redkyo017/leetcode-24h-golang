@@ -56,3 +56,21 @@ func MaxArea(height []int) int {
 	}
 	return res
 }
+
+// 167. Two Sum II - Input Array Is Sorted
+func TwoSumII(numbers []int, target int) []int {
+	res := []int{}
+	l, r := 0, len(numbers)-1
+	for l < r {
+		sum := numbers[l] + numbers[r]
+		if sum == target {
+			res = append(res, l+1, r+1)
+			return res
+		} else if sum < target {
+			l++
+		} else {
+			r--
+		}
+	}
+	return res
+}
