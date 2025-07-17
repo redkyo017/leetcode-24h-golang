@@ -105,3 +105,31 @@ func ThreeSum(nums []int) [][]int {
 
 	return res
 }
+
+// 42. Trapping Rain Water
+func Trap(height []int) int {
+	res := 0
+	if len(height) == 0 {
+		return res
+	}
+	l, r := 0, len(height)-1
+	leftMax, rightMax := height[l], height[r]
+	for l < r {
+		if leftMax < rightMax {
+			l += 1
+			leftMax = max(leftMax, height[l])
+			res += leftMax - height[l]
+			// here dont need to check if (leftmax - height[l]) is negative or not cause we already set the leftmax before canculating, worse case is leftmax = height[i] and the calculating result will be 0, no impact on the res, or we can change the order of above lines of code as
+			// if leftMax - height[l] > 0 {
+			// res += leftMax - height[l]
+			// }
+			// leftMax = max(leftMax, height[l])
+			// same for the right case below
+		} else {
+			r -= 1
+			rightMax = max(rightMax, height[r])
+			res += rightMax - height[r]
+		}
+	}
+	return res
+}
