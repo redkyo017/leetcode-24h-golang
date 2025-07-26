@@ -2,6 +2,7 @@ package main
 
 import (
 	"strconv"
+	"strings"
 )
 
 // 20. Valid Parentheses
@@ -140,3 +141,63 @@ func (this *MinStack) GetMin() int {
  * param_3 := obj.Top();
  * param_4 := obj.GetMin();
  */
+
+// 22. Generate Parentheses
+func GenerateParenthesis(n int) []string {
+	// BRUTE FORCE
+	// 	res := make([]string, 0)
+
+	//    var valid func(string) bool
+	//    valid = func(s string) bool {
+	//        open := 0
+	//        for _, c := range s {
+	//            if c == '(' {
+	//                open++
+	//            } else {
+	//                open--
+	//            }
+	//            if open < 0 {
+	//                return false
+	//            }
+	//        }
+	//        return open == 0
+	//    }
+
+	//    var dfs func(string)
+	//    dfs = func(s string) {
+	//        if len(s) == n*2 {
+	//            if valid(s) {
+	//                res = append(res, s)
+	//            }
+	//            return
+	//        }
+
+	//        dfs(s + "(")
+	//        dfs(s + ")")
+	//    }
+
+	//    dfs("")
+	//    return res
+	stack := []string{}
+	res := []string{}
+	var backtrack func(openN, closedN int)
+	backtrack = func(openN, closedN int) {
+		if openN == closedN && openN == n {
+			p := strings.Join(stack, "")
+			res = append(res, p)
+		}
+		if openN < n {
+			stack = append(stack, "(")
+			backtrack(openN+1, closedN)
+			stack = stack[:len(stack)-1]
+		}
+
+		if closedN < openN {
+			stack = append(stack, ")")
+			backtrack(openN, closedN+1)
+			stack = stack[:len(stack)-1]
+		}
+	}
+	backtrack(0, 0)
+	return res
+}
