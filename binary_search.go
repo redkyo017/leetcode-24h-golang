@@ -41,3 +41,37 @@ func MinEatingSpeed(piles []int, h int) int {
 	}
 	return res
 }
+
+// 74. Search a 2D Matrix
+func SearchMatrix(matrix [][]int, target int) bool {
+	ROWS, COLS := len(matrix), len(matrix[0])
+
+	top, bot := 0, ROWS-1
+	for top <= bot {
+		row := (top + bot) / 2
+		if target > matrix[row][len(matrix[row])-1] {
+			top = row + 1
+		} else if target < matrix[row][0] {
+			bot = row - 1
+		} else {
+			break
+		}
+	}
+	if top > bot {
+		return false
+	}
+
+	row := (top + bot) / 2
+	l, r := 0, COLS-1
+	for l <= r {
+		mid := (l + r) / 2
+		if target > matrix[row][mid] {
+			l = mid + 1
+		} else if target < matrix[row][mid] {
+			r = mid - 1
+		} else {
+			return true
+		}
+	}
+	return false
+}
