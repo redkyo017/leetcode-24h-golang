@@ -75,3 +75,50 @@ func SearchMatrix(matrix [][]int, target int) bool {
 	}
 	return false
 }
+
+// 153. Find Minimum in Rotated Sorted Array
+func FindMin(nums []int) int {
+	res := nums[0]
+	l, r := 0, len(nums)-1
+	for l <= r {
+		if nums[l] < nums[r] {
+			res = min(res, nums[l])
+			break
+		}
+		m := (l + r) / 2
+		res = min(res, nums[m])
+		if nums[m] >= nums[l] {
+			l = m + 1
+		} else {
+			r = m - 1
+		}
+	}
+
+	return res
+}
+
+// 33. Search in Rotated Sorted Array
+func SearchInRotated(nums []int, target int) int {
+	l, r := 0, len(nums)-1
+
+	for l <= r {
+		mid := (l + r) / 2
+		if nums[mid] == target {
+			return mid
+		}
+		if nums[l] <= nums[mid] {
+			if target < nums[l] || target > nums[mid] {
+				l = mid + 1
+			} else {
+				r = mid - 1
+			}
+		} else {
+			if target < nums[mid] || target > nums[r] {
+				r = mid - 1
+			} else {
+				l = mid + 1
+			}
+		}
+	}
+	return -1
+}
