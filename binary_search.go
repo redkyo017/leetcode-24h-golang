@@ -122,3 +122,42 @@ func SearchInRotated(nums []int, target int) int {
 	}
 	return -1
 }
+
+// 981. Time Based Key-Value Store
+type TimeMap struct {
+	m map[string][]TimePair
+}
+
+type TimePair struct {
+	timestamp int
+	value     string
+}
+
+func TimeMapConstructor() TimeMap {
+	return TimeMap{
+		m: make(map[string][]TimePair),
+	}
+}
+
+func (this *TimeMap) Set(key string, value string, timestamp int) {
+	this.m[key] = append(this.m[key], TimePair{timestamp, value})
+}
+
+func (this *TimeMap) Get(key string, timestamp int) string {
+	pairs, existed := this.m[key]
+	if !existed || len(pairs) == 0 {
+		return ""
+	}
+	l, r := 0, len(pairs)-1
+	res := ""
+	for l <= r {
+		m := (l + r) / 2
+		if pairs[m].timestamp <= timestamp {
+			res = pairs[m].value
+			l = m + 1
+		} else {
+			r = m - 1
+		}
+	}
+	return res
+}
