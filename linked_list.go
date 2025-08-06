@@ -146,5 +146,49 @@ func RemoveNthFromEnd(head *ListNode, n int) *ListNode {
 
 // 143. Reorder List
 func ReorderList(head *ListNode) {
-
+	if head == nil {
+		return
+	}
+	// BRUTE FORCE
+	// nodes := []*ListNode{}
+	// curr := head
+	// for curr != nil {
+	// 	nodes = append(nodes, curr)
+	// 	curr = curr.Next
+	// }
+	// l, r := 0, len(nodes)-1
+	// for l < r {
+	// 	nodes[l].Next = nodes[r]
+	// 	if l >= r {
+	// 		break
+	// 	}
+	// 	l++
+	// 	nodes[r].Next = nodes[l]
+	// 	r--
+	// }
+	// nodes[l].Next = nil
+	// FAST & SLOW
+	fast, slow := head, head
+	for fast != nil && fast.Next != nil {
+		slow = slow.Next
+		fast = fast.Next.Next
+	}
+	// reverse second part
+	second := slow.Next
+	var prev *ListNode
+	slow.Next = nil
+	for second != nil {
+		tmp := second.Next
+		second.Next = prev
+		prev = second
+		second = tmp
+	}
+	// merge two half
+	first, second := head, prev
+	for second != nil {
+		tmp1, tmp2 := first.Next, second.Next
+		first.Next = second
+		second.Next = tmp1
+		first, second = tmp1, tmp2
+	}
 }
