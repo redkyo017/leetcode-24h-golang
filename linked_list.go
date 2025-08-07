@@ -192,3 +192,68 @@ func ReorderList(head *ListNode) {
 		first, second = tmp1, tmp2
 	}
 }
+
+// 146. LRU Cache
+type LRUNode struct {
+	key, val   int
+	prev, next *LRUNode
+}
+
+type LRUCache struct {
+	cache       map[int]*LRUNode
+	capacity    int
+	left, right *LRUNode
+}
+
+func LRUCacheConstructor(capacity int) LRUCache {
+	lru := LRUCache{
+		capacity: capacity,
+		cache:    make(map[int]*LRUNode),
+		left:     &LRUNode{},
+		right:    &LRUNode{},
+	}
+	lru.left.next = lru.right
+	lru.right.prev = lru.left
+	return lru
+}
+
+func (this *LRUCache) remove(node *LRUNode) {
+	prev, next := node.prev, node.next
+	prev.next = next
+	next.prev = prev
+}
+
+func (this *LRUCache) insert(node *LRUNode) {
+	prev, next := this.right.prev, this.right
+	prev.next = node
+	next.prev = node
+	node.prev = prev
+	node.next = next
+}
+
+func (this *LRUCache) Get(key int) int {
+	if node, ok := this.cache[key]; ok {
+		this.remove(node)
+		this.insert(node)
+		return node.val
+	}
+	return -1
+}
+
+func (this *LRUCache) Put(key int, value int) {
+	if node, ok := this.cache[key]; ok {
+		this.remove(node)
+		delete(this.cache, key)
+	}
+	node := &LRUNode{
+		key: key,
+		val: value,
+	}
+	this.cache[key] = node
+	this.insert(node)
+	if len(this.cache) > this.capacity {
+		lru := this.left.next
+		this.remove(lru)
+		delete(this.cache, lru.key)
+	}
+}
