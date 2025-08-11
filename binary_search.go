@@ -161,3 +161,22 @@ func (this *TimeMap) Get(key string, timestamp int) string {
 	}
 	return res
 }
+
+// 199. Binary Tree Right Side View
+func rightSideView(root *TreeNode) []int {
+	var res []int
+	// DFS APPROACH
+	var dfs func(node *TreeNode, depth int)
+	dfs = func(node *TreeNode, depth int) {
+		if node == nil {
+			return
+		}
+		if depth == len(res) {
+			res = append(res, node.Val)
+		}
+		dfs(node.Right, depth+1)
+		dfs(node.Left, depth+1)
+	}
+	dfs(root, 0)
+	return res
+}
