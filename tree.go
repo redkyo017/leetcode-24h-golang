@@ -189,13 +189,6 @@ func LowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
 	return root
 }
 
-// 1448. Count Good Nodes in Binary Tree
-func GoodNodes(root *TreeNode) int {
-	res := 0
-
-	return res
-}
-
 // 102. Binary Tree Level Order Traversal
 func LevelOrder(root *TreeNode) [][]int {
 	res := [][]int{}
@@ -247,4 +240,62 @@ func RightSideView(root *TreeNode) []int {
 		}
 	}
 	return res
+}
+
+// 1448. Count Good Nodes in Binary Tree
+func GoodNodes(root *TreeNode) int {
+	res := 0
+	// BFS
+	// if root == nil {
+	// 	return 0
+	// }
+	// queue := []struct {
+	// 	node   *TreeNode
+	// 	maxVal int
+	// }{{root, math.MinInt32}}
+	// for len(queue) > 0 {
+	// 	front := queue[0]
+	// 	queue = queue[1:]
+
+	// 	node := front.node
+	// 	maxVal := front.maxVal
+
+	// 	if node.Val >= maxVal {
+	// 		res++
+	// 	}
+	// 	newMaxVal := max(maxVal, node.Val)
+	// 	if node.Left != nil {
+	// 		queue = append(queue, struct {
+	// 			node   *TreeNode
+	// 			maxVal int
+	// 		}{node: node.Left, maxVal: newMaxVal})
+	// 	}
+	// 	if node.Right != nil {
+	// 		queue = append(queue, struct {
+	// 			node   *TreeNode
+	// 			maxVal int
+	// 		}{node: node.Right, maxVal: newMaxVal})
+	// 	}
+	// }
+	// return res
+
+	// DFS
+	if root == nil {
+		return 0
+	}
+	var dfs func(node *TreeNode, maxVal int) int
+	dfs = func(node *TreeNode, maxVal int) int {
+		if node == nil {
+			return 0
+		}
+		res := 0
+		if node.Val >= maxVal {
+			res = 1
+		}
+		maxVal = max(maxVal, node.Val)
+		res += dfs(node.Left, maxVal)
+		res += dfs(node.Right, maxVal)
+		return res
+	}
+	return dfs(root, root.Val)
 }
