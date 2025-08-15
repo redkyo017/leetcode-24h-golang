@@ -299,3 +299,53 @@ func GoodNodes(root *TreeNode) int {
 	}
 	return dfs(root, root.Val)
 }
+
+// 230. Kth Smallest Element in a BST
+func KthSmallest(root *TreeNode, k int) int {
+	if root == nil {
+		return -1
+	}
+	// var arr []int
+	var dfs func(node *TreeNode)
+	// BRUTE FORCE
+	// dfs = func(node *TreeNode) {
+	// 	if node == nil {
+	// 		return
+	// 	}
+	// 	arr = append(arr, node.Val)
+	// 	dfs(node.Left)
+	// 	dfs(node.Right)
+	// }
+	// dfs(root)
+	// sort.Ints(arr)
+	// return arr[k-1]
+
+	// IN-ORDER TRAVERSE
+	// dfs = func(node *TreeNode) {
+	// 	if node == nil {
+	// 		return
+	// 	}
+	// 	dfs(node.Left)
+	// 	arr = append(arr, node.Val)
+	// 	dfs(node.Right)
+	// }
+	// dfs(root)
+	// return arr[k-1]
+
+	// RECURSIVE OPTIMAL
+	counter, res := k, 0
+	dfs = func(node *TreeNode) {
+		if node == nil {
+			return
+		}
+		dfs(node.Left)
+		counter--
+		if counter == 0 {
+			res = node.Val
+			return
+		}
+		dfs(node.Right)
+	}
+	dfs(root)
+	return res
+}
