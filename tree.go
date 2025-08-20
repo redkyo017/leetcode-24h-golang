@@ -349,3 +349,43 @@ func KthSmallest(root *TreeNode, k int) int {
 	dfs(root)
 	return res
 }
+
+// 105. Construct Binary Tree from Preorder and Inorder Traversal
+func BuildTree(preorder []int, inorder []int) *TreeNode {
+	DFS
+	if len(preorder) == 0 || len(inorder) == 0 {
+		return nil
+	}
+	root := &TreeNode{Val: preorder[0]}
+	mid := 0
+	for i, val := range inorder {
+		if val == preorder[0] {
+			mid = i
+		}
+	}
+	root.Left = BuildTree(preorder[1:mid+1], inorder[:mid])
+	root.Right = BuildTree(preorder[mid+1:], inorder[mid+1:])
+	return root
+
+	// DFS with hash
+	// indices := make(map[int]int)
+	// for i, val := range inorder {
+	// 	indices[val] = i
+	// }
+	// preIdx := 0
+	// var dfs func(int, int) *TreeNode
+	// dfs = func(left int, right int) *TreeNode {
+	// 	if left > right {
+	// 		return nil
+	// 	}
+	// 	rootVal := preorder[preIdx]
+	// 	preIdx++
+
+	// 	root := &TreeNode{Val: rootVal}
+	// 	mid := indices[rootVal]
+	// 	root.Left = dfs(left, mid-1)
+	// 	root.Right = dfs(mid+1, right)
+	// 	return root
+	// }
+	// return dfs(0, len(inorder)-1)
+}
