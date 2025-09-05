@@ -352,7 +352,7 @@ func KthSmallest(root *TreeNode, k int) int {
 
 // 105. Construct Binary Tree from Preorder and Inorder Traversal
 func BuildTree(preorder []int, inorder []int) *TreeNode {
-	DFS
+	// DFS
 	if len(preorder) == 0 || len(inorder) == 0 {
 		return nil
 	}
