@@ -92,3 +92,56 @@ func CombinationSum2(candidates []int, target int) [][]int {
 	dfs(0, []int{}, 0)
 	return res
 }
+
+// 46. Permutations
+func Permute(nums []int) [][]int {
+	if len(nums) == 0 {
+		return [][]int{{}}
+	}
+	// RECURSIVE
+	// res := [][]int{}
+	// perm := Permute(nums[1:])
+	// for _, p := range perm {
+	// 	for i := 0; i <= len(p); i++ {
+	// 		pCopy := append([]int{}, p...)
+	// 		pCopy = append(pCopy[:i], append([]int{nums[0]}, pCopy[i:]...)...)
+	// 		res = append(res, pCopy)
+	// 	}
+	// }
+	// return res
+	// ITERATIVE
+	// perms := [][]int{{}}
+	// for _, num := range nums {
+	// 	var newPerms [][]int
+	// 	for _, p := range perms {
+	// 		for i := 0; i <= len(p); i++ {
+	// 			pCopy := append([]int{}, p...)
+	// 			pCopy = append(pCopy[:i], append([]int{num}, pCopy[i:]...)...)
+	// 			newPerms = append(newPerms, pCopy)
+	// 		}
+	// 	}
+	// 	perms = newPerms
+	// }
+	// return perms
+	// BACKTRACKING
+	var res [][]int
+	var backtrack func(res *[][]int, perm []int, nums []int, pick []bool)
+	backtrack = func(res *[][]int, perm, nums []int, pick []bool) {
+		if len(perm) == len(nums) {
+			temp := append([]int{}, perm...)
+			*res = append(*res, temp)
+			return
+		}
+		for i := 0; i < len(nums); i++ {
+			if !pick[i] {
+				perm = append(perm, nums[i])
+				pick[i] = true
+				backtrack(res, perm, nums, pick)
+				perm = perm[:len(perm)-1]
+				pick[i] = false
+			}
+		}
+	}
+	backtrack(&res, []int{}, nums, make([]bool, len(nums)))
+	return res
+}

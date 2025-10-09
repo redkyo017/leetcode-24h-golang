@@ -244,7 +244,7 @@ func RightSideView(root *TreeNode) []int {
 
 // 1448. Count Good Nodes in Binary Tree
 func GoodNodes(root *TreeNode) int {
-	res := 0
+	// res := 0
 	// BFS
 	// if root == nil {
 	// 	return 0
