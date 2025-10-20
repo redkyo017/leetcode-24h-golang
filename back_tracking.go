@@ -207,3 +207,42 @@ func SubsetsWithDup(nums []int) [][]int {
 	backtrack(0, []int{})
 	return res
 }
+
+// 79. Word Search
+func Exist(board [][]byte, word string) bool {
+	rows, cols := len(board), len(board[0])
+	// HASH SET
+	// path := make(map[[2]int]bool)
+	var dfs func(r, c, i int) bool
+	dfs = func(r, c, i int) bool {
+		if i == len(word) {
+			return true
+		}
+		// HASH SET
+		// if r < 0 || r >= rows || c < 0 || c >= cols || word[i] != board[r][c] || path[[2]int{r, c}] {
+		// 	return false
+		// }
+		// path[[2]int{r, c}] = true
+		// res := dfs(r-1, c, i+1) || dfs(r+1, c, i+1) || dfs(r, c-1, i+1) || dfs(r, c+1, i+1)
+		// delete(path, [2]int{r, c})
+		// OPTIMAL
+		if r < 0 || r >= rows || c < 0 || c >= cols || word[i] != board[r][c] || board[r][c] == '#' {
+			return false
+		}
+		temp := board[r][c]
+		board[r][c] = '#'
+		res := dfs(r-1, c, i+1) || dfs(r+1, c, i+1) || dfs(r, c-1, i+1) || dfs(r, c+1, i+1)
+		board[r][c] = temp
+
+		return res
+	}
+
+	for i := 0; i < rows; i++ {
+		for j := 0; j < cols; j++ {
+			if dfs(i, j, 0) {
+				return true
+			}
+		}
+	}
+	return false
+}
